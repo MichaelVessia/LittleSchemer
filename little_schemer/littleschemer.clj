@@ -172,8 +172,29 @@
     :else (less (dec n) (dec m))))
 
 (defn equals
-  "Equality rewrittten using greater and less"
+  "Equality written using greater and less"
   [n m]
   (if
       (or (greater n m) (less n m)) false
       true))
+
+(defn exp
+  "Raises n to the m power"
+  [n m]
+  (if
+      (zero? m) 1
+      (multiply n (exp n (dec m)))))
+
+(defn quotient
+  "Integer division of non negative numbers. Divides m into n"
+  [n m]
+  (if (less n m)
+    0
+    (inc (quotient (minus n m) m))))
+
+(defn length
+  "Returns the length of a given lat"
+  [lat]
+  (if (empty? lat)
+    (inc (length (rest lat)))))
+
