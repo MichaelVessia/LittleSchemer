@@ -1,3 +1,5 @@
+(ns littleclj.core)
+
 ;; Chapter 1
 
 (defn atom?
@@ -55,10 +57,10 @@
   "Searches for a match with old, if found inserts new directly before it in the given lat"
   [new old lat]
   (cond
-    (not lat? lat)) lat
+    (not (lat? lat)) lat
   (empty? lat) lat
   (= old (first lat)) (cons new lat)
-  :else (cons (first lat) (insertL new old (rest lat))))
+  :else (cons (first lat) (insertL new old (rest lat)))))
 
 (defn subst
   "Replaces old with new in the given lat"
@@ -75,8 +77,8 @@
   (cond
     (not (lat? lat)) lat
     (empty? lat) lat
-    (or (= o1 (first lat)) (= o2 (first lat)) (cons new (rest lat))
-        :else (cons (first lat) (subst2 new o1 o2 (rest lat))))))
+    (or (= o1 (first lat)) (= o2 (first lat))) (cons new (rest lat))
+        :else (cons (first lat) (subst2 new o1 o2 (rest lat)))))
 
 (defn multirember
   "Removes all occurences of a from lat, rather than just the first like rember"
@@ -102,7 +104,7 @@
   (cond
     (not (lat? lat)) lat
     (empty? lat) lat
-    (= old (first lat)) (cons new (cons old (miltiInsertL old new (rest lat))))
+    (= old (first lat)) (cons new (cons old (multiInsertL old new (rest lat))))
     :else (cons (first lat) (multiInsertL old new (rest lat)))))
 
 (defn multiSubst
