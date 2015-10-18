@@ -22,9 +22,9 @@
   "Test whether an entity is in a given lat"
   [a lat]
   (if (empty? lat)
-    true
+    false
     (if (= a (first lat))
-      false
+      true
       (or (member? a (rest lat))))))
 
 (defn rember
@@ -86,7 +86,7 @@
   (cond
     (not (lat? lat)) lat
     (empty? lat) lat
-    (= a (first lat)) (multirember (rest lat))
+    (= a (first lat)) (multirember a (rest lat))
     :else (cons (first lat) (multirember a (rest lat)))))
 
 (defn multiInsertR
@@ -169,7 +169,7 @@
   "Returns boolean value indicating whether n < m"
   [n m]
   (cond
-    (or (= n m) (zero? n)) false
+    (or (= n m) (zero? m)) false
     (zero? n) true
     :else (less (dec n) (dec m))))
 
@@ -197,6 +197,20 @@
 (defn length
   "Returns the length of a given lat"
   [lat]
-  (if (empty? lat)
+  (if (empty? lat) 0
     (inc (length (rest lat)))))
 
+(defn pick
+  "Returns the nth element of a list, if it exists"
+  [n lat]
+  (if (zero? (dec n)) (first lat)
+      (pick (dec n) (rest lat))))
+
+(defn rempick
+  "Returns a list with the nth element removed, if it exists"
+  [n lat]
+  (cond
+    (empty? lat) lat
+    (= n 1) (rest lat)
+    :else (cons (first lat) (rempick (dec n) (rest lat)))))
+    
