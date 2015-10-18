@@ -206,11 +206,40 @@
   (if (zero? (dec n)) (first lat)
       (pick (dec n) (rest lat))))
 
+    
+(defn no-nums
+  "Returns a lat with all of the nums removed"
+  [lat]
+  (cond
+    (empty? lat) lat
+    (number? (first lat)) (no-nums (rest lat))
+    :else (cons (first lat) (no-nums (rest lat)))))
+
+(defn all-nums
+  "Extracts a tuple from a lat using all the numbers in the lat"
+  [lat]
+  (cond
+    (empty? lat) lat
+    (not (number? (first lat))) (all-nums (rest lat))
+    :else (cons (first lat) (all-nums (rest lat)))))
+
+(defn occur
+  "Returns the amount of times a given atom occurs in a lat"
+  [a lat]
+  (cond
+    (empty? lat) 0
+    (= a (first lat)) (inc (occur a (rest lat)))
+    :else (occur a (rest lat))))
+
+(defn one?
+  "Returns whether a number is one"
+  [n]
+  (= n 1))
+
 (defn rempick
   "Returns a list with the nth element removed, if it exists"
   [n lat]
   (cond
     (empty? lat) lat
-    (= n 1) (rest lat)
+    (one? n) (rest lat)
     :else (cons (first lat) (rempick (dec n) (rest lat)))))
-    
